@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 // 导入常量(.env文件);
 const { JWT_SECRET } = require('../config/config.default')
 // 导入数据库相关操作;
-const { createUser, getUserInfo } = require('../service/user.service');
+const { createUser, getUserInfo, updateUserById } = require('../service/user.service');
 // 导入错误类型;
-const { userRegisterError, userLoginError } = require('../constant/user.err.type');
+const { userRegisterError, userLoginError, updatePasswordError } = require('../constant/user.err.type');
 class UserController {
   // 用户注册;
   async userRegister(ctx, next) {
@@ -49,8 +49,28 @@ class UserController {
       return;
     };
   };
-
-
+  //用户修改密码;
+  async userUpdatePassword(ctx, next) {
+    // 获取需要修改密码的用户ID;
+    const id = ctx.state.user.id;
+    // 获取用户请求信息中的新密码;
+    const { user_password } = ctx.request.body;
+    try {
+      // 操作数据库;
+      const res = await updateUserById({ id, user_password });
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: '修改密码成功',
+          result: ''
+        };
+      };
+    } catch (error) {
+      console.error('修改密码失败', error);
+      ctx.app.emit('error', updatePasswordError, ctx);
+      return;
+    }
+  };
 };
 
 // 实例化并导出;

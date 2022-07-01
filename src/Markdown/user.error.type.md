@@ -11,3 +11,5 @@
 10006(userLoginError):用户登录失败;
 
 10007(userPasswordError):用户密码不匹配;
+
+10008(updatePasswordError):修改密码失败;

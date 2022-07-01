@@ -34,6 +34,11 @@ module.exports = {
     message: '用户密码不匹配',
     result: ''
   },
+  updatePasswordError: {
+    code: 10008,
+    message: '修改密码失败',
+    result: ''
+  },
 };
 /**
  * 用户相关的错误类型;
