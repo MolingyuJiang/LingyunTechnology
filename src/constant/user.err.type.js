@@ -19,7 +19,21 @@ module.exports = {
     message: '注册时用户密码加密失败',
     result: ''
   },
-
+  userNotExists: {
+    code: 10005,
+    message: '用户不存在',
+    result: ''
+  },
+  userLoginError: {
+    code: 10006,
+    message: '用户登录失败',
+    result: ''
+  },
+  userPasswordError: {
+    code: 10007,
+    message: '用户密码不匹配',
+    result: ''
+  },
 };
 /**
  * 用户相关的错误类型;

@@ -26,7 +26,9 @@ class UserController {
   };
   //用户登录;
   async userLogin(ctx, next) {
-
+    //获取用户请求信息中的数据;
+    const { user_name, user_password } = ctx.request.body;
+    ctx.body = user_name;
   }
 
 

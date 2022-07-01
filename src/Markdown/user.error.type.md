@@ -6,3 +6,8 @@
 
 10004(cryptPasswordError):注册时用户密码加密失败;
 
+10005(userNotExists):用户不存在;
+
+10006(userLoginError):用户登录失败;
+
+10007(userPasswordError):用户密码不匹配;

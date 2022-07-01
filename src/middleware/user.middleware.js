@@ -1,10 +1,12 @@
 //导入bcryptjs:用于用户密码加密;
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
 // 导入数据库操作;
 const { getUserInfo } = require('../service/user.service');
-//导入错误类型;
-const { userFormateError, userAlreadyExists, userRegisterError, cryptPasswordError } = require('../constant/user.err.type');
-//用户验证器:用于校验用户参数格式;
+//导入用户相关的错误类型;
+const { userFormateError, userAlreadyExists, userRegisterError, cryptPasswordError, userNotExists, userLoginError, userPasswordError } = require('../constant/user.err.type');
+/**
+ * 用户验证器:用于校验用户参数格式;
+ */
 const userValidator = async (ctx, next) => {
   //获取用户请求参数中的信息;
   const { user_name, user_password } = ctx.request.body;
@@ -17,7 +19,9 @@ const userValidator = async (ctx, next) => {
   //放行;
   await next();
 };
-//验证用户是否已经存在;
+/**
+ *验证用户是否已经存在;
+ */
 const verifyUser = async (ctx, next) => {
   // 获取用户请求参数中的信息(获取用户名);
   const { user_name } = ctx.request.body;
@@ -38,7 +42,9 @@ const verifyUser = async (ctx, next) => {
   // 放行;
   await next();
 };
-// 用户密码加密;
+/**
+ * 用户密码加密;
+ */
 const cryptPassword = async (ctx, next) => {
   //获取用户请求信息中的参数;
   const { user_password } = ctx.request.body;
@@ -57,13 +63,45 @@ const cryptPassword = async (ctx, next) => {
   //放行;
   await next();
 };
-
+/**
+ * 用户登录信息验证;
+ */
+const verifyLogin = async (ctx, next) => {
+  //获取用户请求信息中的参数;
+  const { user_name, user_password } = ctx.request.body;
+  //判断用户是否已存在(调用getUserInfo进行数据库查询);
+  try {
+    const res = await getUserInfo({ user_name });
+    //如果用户不存在;
+    if (!res) {
+      console.error('用户不存在', { user_name });
+      ctx.app.emit('error', userNotExists, ctx);
+      return;
+    };
+    //如果用户已存在则进行密码比对;
+    //调用 bcrypt的compareSync方法对用户请求中的密码和数据库中的密码进行比对;
+    const comparePassword = bcrypt.compareSync(user_password, res.user_password);
+    //如果密码不匹配;
+    if (!comparePassword) {
+      console.error('用户密码不匹配', { user_name });
+      ctx.app.emit('error', userPasswordError, ctx);
+      return;
+    };
+  } catch (error) {
+    console.error('用户登录失败', error);
+    ctx.app.emit('error', userLoginError, ctx);
+    return;
+  };
+  //放行;
+  await next();
+};
 
 // 导出;
 module.exports = {
   userValidator,
   verifyUser,
-  cryptPassword
+  cryptPassword,
+  verifyLogin
 };
 /**
  * 此文件是用户相关的中间件处理;
