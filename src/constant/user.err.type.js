@@ -14,6 +14,11 @@ module.exports = {
     message: '用户注册时出错',
     result: ''
   },
+  cryptPasswordError: {
+    code: 10004,
+    message: '注册时用户密码加密失败',
+    result: ''
+  },
 
 };
 /**

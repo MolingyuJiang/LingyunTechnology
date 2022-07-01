@@ -1,6 +1,6 @@
 // 用户相关的控制器;
 // 导入数据库相关操作;
-const { createUser, getUserInfo } = require('../service/user.service');
+const { createUser } = require('../service/user.service');
 // 导入错误类型;
 const { userRegisterError } = require('../constant/user.err.type')
 class UserController {
@@ -23,7 +23,13 @@ class UserController {
       console.log(error);
       ctx.app.emit('error', userRegisterError, ctx);
     }
+  };
+  //用户登录;
+  async userLogin(ctx, next) {
+
   }
+
+
 };
 
 // 实例化并导出;

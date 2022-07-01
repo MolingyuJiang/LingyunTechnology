@@ -12,7 +12,7 @@ const UserModel = lingyunSequelize.define('lingyun_user', {
     // 是否为空;
     allowNull: false,
     // 默认值;
-    defaultValue: 'qwertyu',
+    defaultValue: 'upload123456789',
     // 表注释;
     comment: '用户头像'
   },

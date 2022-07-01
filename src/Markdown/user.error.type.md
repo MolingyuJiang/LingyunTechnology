@@ -4,3 +4,5 @@
 
 10003(userRegisterError):用户注册时出错;
 
+10004(cryptPasswordError):注册时用户密码加密失败;
+
