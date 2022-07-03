@@ -10,7 +10,7 @@ const validator = async (ctx, next) => {
       goods_name: { type: 'string', required: true },
       goods_price: { type: 'number', required: true },
       goods_number: { type: 'number', required: true },
-      goods_image: { type: 'array', required: true }
+      goods_image: { type: 'string', required: true }
     })
   } catch (error) {
     console.error('商品参数错误', error);

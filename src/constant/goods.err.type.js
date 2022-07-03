@@ -14,6 +14,21 @@ module.exports = {
     message: '商品参数错误',
     result: ''
   },
+  gaddGoodsError: {
+    code: 20004,
+    message: '发布商品失败',
+    result: ''
+  },
+  changeGoodsError: {
+    code: 20005,
+    message: '修改商品失败',
+    result: ''
+  },
+  invalidGoodsID: {
+    code: 20006,
+    message: '无效的商品ID',
+    result: ''
+  },
 };
 /**
  * 商品相关的错误类型;

@@ -6,12 +6,13 @@ const { auth, hadAdminPermission } = require('../middleware/auth.middleware');
 // 导入商品相关的中间件;
 const { validator } = require('../middleware/goods.middleware');
 // 导入商品相关的控制器;
-const { addGoods } = require('../controller/goods.controller');
+const { addGoods, changeGoods } = require('../controller/goods.controller');
 // 实例化路由并绑定前缀;
 const router = new Router({ prefix: '/goods' });
 // 商品上传;
 router.post('/addGoods', auth, hadAdminPermission, validator, addGoods);
-
+// 修改商品;
+router.put('/changeGoods/:id', auth, hadAdminPermission, validator, changeGoods);
 
 
 
