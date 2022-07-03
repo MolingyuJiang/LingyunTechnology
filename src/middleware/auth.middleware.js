@@ -10,7 +10,7 @@ const { tokenExpiredError, jsonWebTokenError, hadAdminPermissionError, hadNotAdm
 //判断用户token是否正确
 const auth = async (ctx, next) => {
   // 获取用户请求头中的token;
-  const { authorization } = ctx.request.header;
+  const { authorization = '' } = ctx.request.header;
   // 截取所需字段;
   const token = authorization.replace('Bearer ', '');
   try {
