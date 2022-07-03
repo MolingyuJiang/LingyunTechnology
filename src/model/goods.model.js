@@ -29,6 +29,9 @@ const GoodsModel = lingyunSequelize.define('lingyun_goods', {
     allowNull: false,
     comment: '商品图片'
   }
+}, {
+  //不强制删除商品;
+  paranoid: true
 });
 // 创建数据库商品表(创建表,如果存在则先删除原始表再进行创建,具体:https://www.sequelize.com.cn/core-concepts/model-basics#%E6%A8%A1%E5%9E%8B%E5%90%8C%E6%AD%A5);
 //同步完一定要注释掉;

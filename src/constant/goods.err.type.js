@@ -29,6 +29,16 @@ module.exports = {
     message: '无效的商品ID',
     result: ''
   },
+  xiajiaGoodsError: {
+    code: 20007,
+    message: '下架商品失败',
+    result: ''
+  },
+  shangjiaGoodsError: {
+    code: 20008,
+    message: '上架商品失败',
+    result: ''
+  },
 };
 /**
  * 商品相关的错误类型;
