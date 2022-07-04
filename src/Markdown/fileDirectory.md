@@ -8,6 +8,8 @@ index(业务相关默认文件夹);
 
 ##### config(一些设置文件);
 
+config.default.js(此文件是一些设置文件,目前仅用于使用dotenv读取常量到环境变量);
+
 ##### constant:(常量文件夹);
 
 ##### controller(业务控制器文件);
