@@ -39,6 +39,11 @@ module.exports = {
     message: '上架商品失败',
     result: ''
   },
+  findGoodsListError: {
+    code: 20009,
+    message: '获取商品列表失败',
+    result: ''
+  },
 };
 /**
  * 商品相关的错误类型;

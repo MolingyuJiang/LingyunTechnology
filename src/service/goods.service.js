@@ -34,11 +34,8 @@ class GoodsService {
       pageSize,
       total: count,
       list: rows
-    }
-  }
-
-
-
+    };
+  };
 };
 // 实例化并导出;
 module.exports = new GoodsService();

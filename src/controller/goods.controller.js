@@ -2,7 +2,7 @@
 // 导入商品相关数据库相关操作;
 const { createGoods, updateGoods, removeGoods, restoreGoods, findGoods } = require('../service/goods.service');
 // 导入错误类型;
-const { addGoodsError, changeGoodsError, invalidGoodsID, xiajiaGoodsError, shangjiaGoodsError } = require('../constant/goods.err.type');
+const { addGoodsError, changeGoodsError, invalidGoodsID, xiajiaGoodsError, shangjiaGoodsError, findGoodsListError } = require('../constant/goods.err.type');
 class GoodsController {
   // 添加商品;
   async addGoods(ctx, next) {
@@ -62,7 +62,7 @@ class GoodsController {
       ctx.app.emit('error', xiajiaGoodsError, ctx);
       return;
     }
-  }
+  };
   //上架商品;
   async shangjia(ctx, next) {
     try {
@@ -83,7 +83,7 @@ class GoodsController {
       ctx.app.emit('error', shangjiaGoodsError, ctx);
       return;
     }
-  }
+  };
   // 获取商品列表;
   async findAll(ctx, next) {
     // 解析用户请求中的参数;
@@ -96,13 +96,17 @@ class GoodsController {
         result: res
       }
     } catch (error) {
+      console.error('获取商品列表失败', error);
+      ctx.app.emit('error', findGoodsListError, ctx);
+      return;
+    };
+  };
 
-    }
-  }
+
+
 
 
 };
-
 // 实例化并导出;
 module.exports = new GoodsController();
 /**
