@@ -1,34 +1,61 @@
 // 地址相关的数据库操作;
 
 // 导入sequelize; 
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
 // 导入地址数据库模型对象;
-
+const AddressModel = require('../model/addr.model');
 class AddrService {
-  // ---添加和更新购物车---;
-  async createOrUpdateCart(user_id, goods_id) {
-    // 根据user_id和goods_id同时进行查找数据;
-    let res = await CartModel.findOne({
+  // ---添加地址---;
+  async createAddr(addr) {
+    const res = await AddressModel.create(addr);
+    return res;
+  };
+
+  // ---获取地址列表---;
+  async findAllAddr(user_id) {
+    const res = await AddressModel.findAll({
+      // 需要的字段;
+      attributes: ['id', 'consignee', 'phone', 'address', 'is_default'],
+      where: { user_id }
+    });
+    return res;
+  };
+
+  // ---修改地址---;
+  async updateAddr(id, params) {
+    const res = await AddressModel.update(params, { where: { id } });
+    return res;
+  };
+
+  // ---删除地址---;
+  async removeAddr(id) {
+    const res = await AddressModel.destroy({ where: { id } });
+    return res;
+  };
+
+  // ---设置默认地址---;
+  async setDefaultAddr(user_id, id) {
+    // 根据用户ID把所有用户地址取消默认再根据地址ID进行默认地址设置;
+    await AddressModel.update({ is_default: false }, {
       where: {
-        [Op.and]: {
-          user_id,
-          goods_id
-        }
+        user_id
       }
     });
-    // 如果存在数据,sequelize的递增;
-    if (res) {
-      await res.increment('number');
-      return await res.reload();
-    } else {
-      // 如果不存在数据,则创建数据;
-      return await CartModel.create({
-        user_id,
-        goods_id
-      });
-    };
+    const res = await AddressModel.update(
+      { is_default: true },
+      {
+        where: {
+          id
+        }
+      }
+    )
+
+
+    return res;
   };
+
+
 
 
 };
