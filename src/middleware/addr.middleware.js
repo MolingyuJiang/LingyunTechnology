@@ -13,7 +13,7 @@ const { addrParameterError } = require('../constant/addr.err.type')
 const addrValidator = (rules) => {
   return async (ctx, next) => {
     try {
-      await ctx.verifyParams(rules);
+      ctx.verifyParams(rules);
     } catch (error) {
       console.error('地址数据格式错误', error);
       addrParameterError.result = error;
@@ -22,15 +22,6 @@ const addrValidator = (rules) => {
     };
     await next();
   };
-
-
-
-
-
-
-
-
-
 };
 // 导出;
 module.exports = {
