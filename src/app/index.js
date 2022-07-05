@@ -24,7 +24,9 @@ app.use(KoaBody({
     uploadDir: path.join(__dirname, '../uploads'),
     //是否保留文件扩展名;
     keepExtensions: 'true'
-  }
+  },
+  // 开放的请求方式;
+  parsedMethods: ['POST', 'PUT', 'PATCH', 'DELETE']
 }));
 //挂载koa-static,用于暴露静态资源目录;
 app.use(KoaStatic(path.join(__dirname, '../uploads')));
