@@ -1,8 +1,8 @@
 // 订单相关的控制器;
 // 导入订单相关数据库相关操作;
-const { createOrder } = require('../service/order.service')
+const { createOrder, findAllOrder, updateOrder } = require('../service/order.service')
 // 导入错误类型;
-const { addOrderError } = require('../constant/order.err.type')
+const { addOrderError, orderListError, changeOrderError } = require('../constant/order.err.type')
 class OrderController {
   // 新建订单;
   async addOrder(ctx, next) {
@@ -31,6 +31,45 @@ class OrderController {
       return;
     };
   };
+
+  // 获取订单列表;
+  async orderList(ctx, next) {
+    // 解析用户请求信息中的参数;
+    const { pageNum = 1, pageSize = 10, status = 0 } = ctx.request.query;
+    try {
+      const res = await findAllOrder(pageNum, pageSize, status);
+      ctx.body = {
+        code: 0,
+        message: '获取订单列表成功',
+        result: res
+      };
+    } catch (error) {
+      console.error('获取订单列表失败', error);
+      ctx.app.emit('error', orderListError, ctx);
+      return;
+    };
+  };
+
+  // 更改订单;
+  async changeOrder(ctx, next) {
+    // 获取订单ID;
+    const id = ctx.request.params.id;
+    // 解析用户请求信息中的参数;
+    const order_state = ctx.request.body;
+    try {
+      const res = await updateOrder(id, order_state);
+      ctx.body = {
+        code: 0,
+        message: '修改订单状态成功',
+        result: res
+      };
+    } catch (error) {
+      console.error('修改订单状态失败', error);
+      ctx.app.emit('error', changeOrderError, ctx);
+      return;
+    };
+  };
+
 
 
 };
